@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
+
+public class ShareStart : MonoBehaviour
+{
+
+    public void BeginShare()
+    {
+    	var components = new Firebase.DynamicLinks.DynamicLinkComponents(
+    // The base Link.
+    new System.Uri("https://INSERT_URL.com/"),
+    // The dynamic link URI prefix.
+    "https://INSERT_DEEPLINK_URL.page.link/") {
+      IOSParameters = new Firebase.DynamicLinks.IOSParameters("INSERT_BUNDLE_ID"),
+      AndroidParameters = new Firebase.DynamicLinks.AndroidParameters(
+        "com.example.android.package_name"),
+    };
+    	string finalUrl = components.LongDynamicLink.ToString();
+    	
+
+    	new NativeShare().SetText(finalUrl).SetSubject( "SET SUBJECT" ).SetCallback( ( result, shareTarget ) => Debug.Log( "Share result: " + result + ", selected app: " + shareTarget ) ).Share();
+
+
+    }
+}
