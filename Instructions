@@ -1,0 +1,80 @@
+**👩‍💻 Purpose:** Allow users to be directed to a certain part of the app by clicking on a link.
+
+**🪜 Steps:**
+
+*Configuration Steps:*
+
+1) Create a new app in the Firebase Console and add the App ID, name, Bundle ID, App Store ID, and App ID Prefix.
+
+2) Click on the Dynamic Links section and add customize your subdomain. 
+
+3) Test out your custom domain by entering "https://example.page.link/apple-app-site-association" and making sure your app details are appearing.
+
+Response should look like this:
+
+```json
+{
+   "applinks":{
+      "apps":[
+         
+      ],
+      "details":[
+         {
+            "appID":"APP_ID",
+            "paths":[
+               "NOT /_/*",
+               "/*"
+            ]
+         }
+      ]
+   }
+}
+```
+
+4) In XCode, go to Capabilities and enable Associated Domains. Add the sub domain you created earlier by hitting the '+' and adding "applinks:example.page.link".
+
+5) In XCode, go to Info and locate URL Types. Add a new url type, and specify the Identifier as "Bundle ID" and URL Schemes as com.example.youridentifier.
+
+6) Build the app. Click on your link "https://example.page.link/" from a different source like the Notes App. If it is not directing to the app, double check the previous steps or make sure that your link is set to "Open in appName" and not "Open in Safari".
+
+*Creating a link manually:*
+
+1) Go to the Firebase Console and select Create a New Link. 
+
+2) Follow the steps to set up your link. 
+
+- The Deep Link URL is the url that will open up on devices without the app installed.
+- You can setup the link to direct to the app store/play store depending on the app.
+- Social media tags are what will be shared when sharing your app through social media.
+
+*Generating a link through Unity:*
+
+1) Go to your app in the Firebase Console and locate the .plist file. Download it and drag it into the Assets folder in Unity.
+
+2) Download the Firebase SDK and open the Dynamics Link package in your Unity project.
+
+You may have to manually install Cocoapods if it does not automatically install when the Firebase SDK is installed.
+
+3) Follow this [documentation](https://firebase.google.com/docs/dynamic-links/unity/create) and code for generating the link in Unity, under "Using the Firebase Dynamic Links API".
+
+4) Test clicking on your link.
+
+*Interpret a link in code:*
+
+1) Follow the [documentation](https://firebase.google.com/docs/dynamic-links/unity/receive) and code for receiving the link in Unity, under "Register to receive incoming Dynamic Links".
+
+2) Build out your app.
+
+- Error: DllNotFoundException: FirebaseCppApp-8_1_0:
+    - On Mac: System Preferences > Security and Privacy > Allow apps from 'app store and identified developers'
+    - If not working or not Mac: [https://github.com/firebase/quickstart-unity/issues/362](https://github.com/firebase/quickstart-unity/issues/362)
+- Error: Linker command failed with exit code 1 — Firebase
+    - Follow instructions, use .xworkspace instead of .xcodeproject: [https://stackoverflow.com/questions/50509245/linker-command-failed-with-exit-code-1-firebase](https://stackoverflow.com/questions/50509245/linker-command-failed-with-exit-code-1-firebase)
+
+Resources:
+
+1) [iOS Firebase Dynamic Link Tutorial Pt. 1](https://www.youtube.com/watch?v=KLBjAg6HvG0) 
+
+2) [iOS Firebase Dynamic Link Tutorial Pt. 2](https://www.youtube.com/watch?v=iSC5ed6OowA)
+
+3) [Firebase Documentation for Dynamic Links](https://firebase.google.com/docs/dynamic-links/unity/create)
