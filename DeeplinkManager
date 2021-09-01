@@ -1,0 +1,27 @@
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Firebase.DynamicLinks;
+
+public class ProcessDeepLinkMngr : MonoBehaviour
+{
+    void Start()
+    {
+        DynamicLinks.DynamicLinkReceived += OnDynamicLink;
+    }
+
+    public Text textObject;
+    // Display the dynamic link received by the application.
+    void OnDynamicLink(object sender, EventArgs args) 
+    {
+        var dynamicLinkEventArgs = args as ReceivedDynamicLinkEventArgs;
+        Debug.LogFormat("Received dynamic link {0}",
+        dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
+        textObject.text = dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString;
+
+
+    }
+
+}
+
